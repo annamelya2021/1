@@ -2,38 +2,61 @@ import { HfInference } from '@huggingface/inference';
 
 // Отримуємо API ключ з змінних оточення Vite
 const HF_API_KEY = import.meta.env.VITE_HF_API_KEY;
+
+if (!HF_API_KEY) {
+    console.error('Hugging Face API key is not set. Please set VITE_HF_API_KEY in your .env file');
+    throw new Error('Hugging Face API key is missing');
+}
+
 const hf = new HfInference(HF_API_KEY);
 
 /**
  * Функція для перекладу тексту з англійської на українську
  * @param {string} text - Текст для перекладу
+ * @param {string} targetLang - Код мови перекладу (за замовчуванням: 'uk' для української)
  * @returns {Promise<string>} - Перекладений текст
  */
 export const translateText = async (text, targetLang = 'uk') => {
-    const response = await hf.translation({
-      model: 'facebook/nllb-200-distilled-600M',  // Модель для 200+ мов
-      inputs: text,
-      parameters: {
-        src_lang: 'eng_Latn',  // Можна змінювати
-        tgt_lang: targetLang
-      }
-    });
-    return response.translation_text;
-  };
+    if (!text || typeof text !== 'string') {
+        throw new Error('Invalid text input');
+    }
+
+    try {
+        // Використовуємо більш стабільну модель перекладу
+        const model = targetLang === 'uk' 
+            ? 'Helsinki-NLP/opus-mt-en-uk'  // Англо-український переклад
+            : `Helsinki-NLP/opus-mt-en-${targetLang}`;  // Інші мови
+            
+        const response = await hf.translation({
+            model: model,
+            inputs: text
+        });
+        
+        if (!response || !response.translation_text) {
+            throw new Error('Invalid response from translation service');
+        }
+        
+        return response.translation_text;
+    } catch (error) {
+        console.error('Помилка при перекладі:', error);
+        throw new Error('Не вдалося виконати переклад. Будь ласка, перевірте підключення та спробуйте ще раз.');
+    }
+};
 
 // Інші API функції
 export const analyzeSentiment = async (text) => {
-  const response = await hf.textClassification({
-    model: 'distilbert-base-uncased-finetuned-sst-2-english',
-    inputs: text,
-  });
-  return response[0];
+    const response = await hf.textClassification({
+        model: 'distilbert-base-uncased-finetuned-sst-2-english',
+        inputs: text
+    });
+    return response[0];
 };
 
 export const generateText = async (prompt) => {
-  const response = await hf.textGeneration({
-    model: 'gpt2',
-    inputs: prompt,
-  });
-  return response.generated_text;
+    const response = await hf.textGeneration({
+        model: 'gpt2',
+        inputs: prompt,
+        parameters: { max_length: 100 }
+    });
+    return response.generated_text;
 };
