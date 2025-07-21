@@ -23,11 +23,11 @@ export default function Header() {
       
         </Link>
         <nav className={styles.nav}>
-       {/* <Link to="/" className={styles.link}>Головна</Link> */}
-          <Link to="/translate" className={styles.link}>Переклад</Link>
-          <Link to="/image-generation" className={styles.link}>Генерація зображень</Link>
-          <Link to="/sentiment-analysis" className={styles.link}>Аналіз настрою</Link>
-          <Link to="/text-to-speech" className={styles.link}>Текст в мову</Link>
+       {/* <Link to="/" className={styles.link}>Home</Link> */}
+          <Link to="/translate" className={styles.link}>Translation</Link>
+          <Link to="/image-generation" className={styles.link}>Image Generation</Link>
+          <Link to="/sentiment-analysis" className={styles.link}>Sentiment Analysis</Link>
+          <Link to="/text-to-speech" className={styles.link}>Text to Speech</Link>
           
           {currentUser ? (
             <Button 
@@ -36,7 +36,7 @@ export default function Header() {
               onClick={handleLogout}
               className={styles.authButton}
             >
-              Вийти
+              Logout
             </Button>
           ) : (
             <Button 
@@ -46,7 +46,7 @@ export default function Header() {
               color="primary"
               className={styles.authButton}
             >
-              Увійти
+              Login
             </Button>
           )}
         </nav>

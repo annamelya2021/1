@@ -60,3 +60,42 @@ export const generateText = async (prompt) => {
     });
     return response.generated_text;
 };
+
+export const generateImage = async (prompt) => {
+    if (!prompt || typeof prompt !== 'string') {
+        throw new Error('Prompt is required and must be a string');
+    }
+
+    try {
+        // Використовуємо API напряму замість SDK
+        const response = await fetch(
+            'https://api-inference.huggingface.co/models/runwayml/stable-diffusion-v1-5',
+            {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${HF_API_KEY}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    inputs: prompt,
+                    options: {
+                        wait_for_model: true
+                    }
+                }),
+            }
+        );
+
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.error || 'Помилка при генерації зображення');
+        }
+
+        // Отримуємо зображення у форматі blob
+        const imageBlob = await response.blob();
+        // Створюємо URL для відображення зображення
+        return URL.createObjectURL(imageBlob);
+    } catch (error) {
+        console.error('Помилка при генерації зображення:', error);
+        throw new Error('Не вдалося згенерувати зображення. ' + (error.message || 'Будь ласка, спробуйте ще раз.'));
+    }
+};

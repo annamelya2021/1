@@ -14,8 +14,8 @@ export default function Translation() {
       const result = await translateText(inputText);
       setOutputText(result);
     } catch (error) {
-      console.error('Помилка перекладу:', error);
-      setOutputText('Сталася помилка під час перекладу');
+      console.error('Translation error:', error);
+      setOutputText('Translation error');
     } finally {
       setIsLoading(false);
     }
@@ -23,12 +23,12 @@ export default function Translation() {
 
   return (
     <div className={styles.translationContainer}>
-      <h2 className={styles.title}>Переклад тексту</h2>
+      <h2 className={styles.title}>Translation</h2>
       <textarea
         className={styles.textarea}
         value={inputText}
         onChange={(e) => setInputText(e.target.value)}
-        placeholder="Введіть текст для перекладу..."
+        placeholder="Enter text to translate..."
         disabled={isLoading}
       />
       <button
@@ -36,11 +36,11 @@ export default function Translation() {
         onClick={handleTranslate}
         disabled={isLoading || !inputText.trim()}
       >
-        {isLoading ? 'Перекладаємо...' : 'Перекласти'}
+        {isLoading ? 'Translating...' : 'Translate'}
       </button>
       {outputText && (
         <div className={styles.resultContainer}>
-          <h3 className={styles.resultTitle}>Результат:</h3>
+          <h3 className={styles.resultTitle}>Result:</h3>
           <p className={styles.resultText}>{outputText}</p>
         </div>
       )}
