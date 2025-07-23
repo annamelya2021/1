@@ -1,59 +1,162 @@
-# React + Vite
+# AI React App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack application featuring AI capabilities including translation, sentiment analysis, text-to-speech, and a meme generator. The app includes user authentication with JWT and MongoDB.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🔐 User authentication (register, login, logout)
+- 🌐 Multi-language translation
+- 🎭 Meme generator with templates and custom image upload
+- 😊 Sentiment analysis
+- 🔊 Text-to-speech conversion
+- 🎨 Modern, responsive UI
+- 🔄 Real-time updates
+- 🔒 Protected routes
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Frontend
+- React 18
+- React Router 6
+- Axios for API requests
+- CSS Modules for styling
+- Canvas API for meme generation
 
+### Backend
+- Node.js with Express
+- MongoDB with Mongoose
+- JWT for authentication
+- Express Validator for input validation
+- CORS for cross-origin requests
 
- Позитивні фрази:
-I’m feeling great today!
+## Prerequisites
 
-This project is going really well.
+- Node.js (v14 or higher)
+- npm or yarn
+- MongoDB (local or cloud instance)
 
-I love how everything turned out.
+## Getting Started
 
-It’s a beautiful day outside.
+### 1. Clone the repository
 
-I’m so proud of what we’ve accomplished.
+```bash
+git clone https://github.com/yourusername/ai-react-app.git
+cd ai-react-app
+```
 
+### 2. Set up the backend
 
-😞 Негативні фрази:
-Everything is falling apart.
+```bash
+# Navigate to server directory
+cd server
 
-I’m tired and nothing is going right.
+# Install dependencies
+npm install
 
-This is a complete disaster.
+# Create a .env file in the server directory and add your environment variables:
+cp .env.example .env
 
-I feel so frustrated with this situation.
+# Edit the .env file with your configuration
+# MONGODB_URI=your_mongodb_connection_string
+# JWT_SECRET=your_jwt_secret
+# etc.
 
-I hate how this turned out.
+# Start the development server
+npm run dev
+```
 
- Нейтральні або змішані:
-I’m not sure how I feel about this.
+### 3. Set up the frontend
 
-It could have been worse, but it’s not great either.
+```bash
+# Navigate to the project root
+cd ..
 
-I guess it’s okay, just not what I expected.
+# Install dependencies
+npm install
 
-Some parts were good, others not so much.
+# Start the development server
+npm start
+```
 
-I’m just going with the flow.
+The frontend will be available at `http://localhost:3000`
+The backend API will be available at `http://localhost:5000`
 
+## Environment Variables
 
- Нейтральні або змішані:
-I’m not sure how I feel about this.
+### Backend (server/.env)
 
-It could have been worse, but it’s not great either.
+```
+PORT=5000
+NODE_ENV=development
+MONGODB_URI=mongodb://localhost:27017/ai-react-app
+JWT_SECRET=your_jwt_secret_here
+CLIENT_URL=http://localhost:3000
+```
 
-I guess it’s okay, just not what I expected.
+## Available Scripts
 
-Some parts were good, others not so much.
+### Frontend
 
-I’m just going with the flow.
+- `npm start` - Start the development server
+- `npm test` - Run tests
+- `npm run build` - Build for production
+- `npm run eject` - Eject from Create React App
+
+### Backend
+
+- `npm start` - Start the production server
+- `npm run dev` - Start the development server with nodemon
+- `npm test` - Run tests
+
+## Project Structure
+
+```
+ai-react-app/
+├── public/                 # Static files
+├── server/                 # Backend server
+│   ├── config/             # Configuration files
+│   ├── controllers/        # Route controllers
+│   ├── middleware/         # Custom middleware
+│   ├── models/             # MongoDB models
+│   ├── routes/             # API routes
+│   ├── .env.example        # Environment variables example
+│   └── server.js           # Main server file
+├── src/
+│   ├── components/         # Reusable UI components
+│   │   ├── auth/           # Authentication components
+│   │   └── Header/         # Header component
+│   ├── contexts/           # React contexts
+│   ├── pages/              # Page components
+│   │   ├── Home/
+│   │   ├── ImageGeneration/
+│   │   ├── SentimentAnalysis/
+│   │   ├── TextToSpeech/
+│   │   └── Translation/
+│   ├── api/                # API service functions
+│   ├── hooks/              # Custom React hooks
+│   └── styles/             # Global styles
+├── .gitignore
+├── package.json
+├── README.md
+└── setupProxy.js           # Development proxy configuration
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- [React](https://reactjs.org/)
+- [Express](https://expressjs.com/)
+- [MongoDB](https://www.mongodb.com/)
+- [Mongoose](https://mongoosejs.com/)
+- [JWT](https://jwt.io/)
+- And all the amazing open-source libraries used in this project.
